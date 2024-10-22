@@ -1,26 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="description" content="Document Translation App">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document Translation App</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/aws-amplify@latest/dist/aws-amplify.min.js"></script>
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="css/font.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .upload-section {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .upload-area {
+            height: 200px;
+            line-height: 200px;
+            color: #aaa;
+        }
+        .job-history {
+            margin-top: 30px;
+        }
+        .job-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px 0;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Welcome to the Document Translation App</h1>
-        <p class="tagline">Upload any file and get it translated in any language in minutes!</p>
-        <input type="file" id="fileInput" />
-        <button id="uploadButton">Upload Document</button>
-        <div class="info">
-            <h2>About Our App</h2>
-            <p>
-                Our Document Translation App uses advanced AWS services to provide seamless translations.
-                Simply upload your document, and get it translated into multiple languages efficiently!
-            </p>
+<body class="page-home">
+
+<header class="site-header">
+    <div class="site-logo">Document Translator</div>
+    <nav class="site-nav">
+        <ul>
+            <li><a href="apply.html">Apply</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="signin.html">Sign In</a></li>
+            <li><a href="verify.html">Verify</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section class="upload-section">
+        <h1>Upload Your Documents</h1>
+        <div id="uploadArea" class="upload-area" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
+            Drag & Drop your files here
         </div>
+        <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFiles(this.files)">
+        <button onclick="document.getElementById('fileInput').click();">Select Files</button>
+    </section>
+
+    <section class="job-history">
+        <h2>Your Job History</h2>
+        <div id="jobHistoryContainer">
+            <!-- Job history items will be dynamically generated here -->
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-legal">
+        &copy; Document Translator Inc<br>
+        All Rights Reserved
     </div>
+</footer>
+
+<script>
+    // Handle file drop
+    function handleDrop(event) {
+        event.preventDefault();
+        const files = event.dataTransfer.files;
+        handleFiles(files);
+    }
+
+    // Handle selected files
+    function handleFiles(files) {
+        for (let i = 0; i < files.length; i++) {
+            console.log(`File name: ${files[i].name}`);
+            // Here you can upload the file using AJAX or fetch API
+        }
+        // Update job history (example only)
+        const jobHistoryContainer = document.getElementById('jobHistoryContainer');
+        const newJobItem = document.createElement('div');
+        newJobItem.classList.add('job-item');
+        newJobItem.textContent = `Uploaded: ${files[0].name}`;
+        jobHistoryContainer.appendChild(newJobItem);
+    }
+</script>
+
 </body>
 </html>
